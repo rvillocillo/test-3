@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Seat | Wedding Seating Chart</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #faf9f6;
+            color: #2b2b2b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(#e0ded8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .monogram {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .search-card {
+            background-color: #f4f2ed;
+            padding: 25px 20px;
+            border-radius: 16px;
+            border: 1px solid #e6e2d8;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d1ccc0;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        input[type="text"]:focus {
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+            background-color: #ffffff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-submit:hover {
+            background-color: #222222;
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        .full-map-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.85rem;
+            text-decoration: underline;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .error-message {
+            color: #ab3838;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        /* Result View */
+        .result-view {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .guest-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .table-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #5a4b3c;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .map-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e0ded8;
+            background: #fff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn-reset {
+            background-color: transparent;
+            border: 1px solid #1a1a1a;
+            color: #1a1a1a;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo / Monogram -->
+        <div class="monogram">KM</div>
+        
+        <!-- Search View -->
+        <div id="search-view">
+            <p class="subtitle">A special spot is waiting for our favorite people</p>
+            
+            <div class="search-card">
+                <form id="search-form" onsubmit="handleSearch(event)">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="guest-input" 
+                            list="guest-list" 
+                            placeholder="Enter your name" 
+                            autocomplete="off" 
+                            required
+                        >
+                        <datalist id="guest-list"></datalist>
+                    </div>
+                    <button type="submit" class="btn-submit">Find your seat</button>
+                    <div id="error-message" class="error-message">
+                        Name not found. Please check the spelling or feel free to ask an usher for assistance!
+                    </div>
+                </form>
+                <a class="full-map-link" onclick="showFullMap()">View Seat Plan</a>
+            </div>
+        </div>
+
+        <!-- Result View -->
+        <div id="result-view" class="result-view">
+            <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; color: #777; margin-bottom: 5px;">Welcome</p>
+            <h2 id="display-name" class="guest-name"></h2>
+            <div id="display-table" class="table-number"></div>
+            
+            <div class="map-container">
+                <img id="display-map" src="STAGE.jpg" alt="Seating Chart Map">
+            </div>
+
+            <button class="btn-reset" onclick="resetSearch()">Search Again</button>
+        </div>
+    </div>
+
+    <script>
+        /* 
+         * SINGLE MAP IMAGE SETTING
+         * Update the path below to your seat map image filename if different.
+         */
+        const SEAT_MAP_IMAGE = "STAGE.jpg";
+
+        /* 
+         * GUEST DATABASE 
+         * Format: "guest name": { table: "Table Name", map: SEAT_MAP_IMAGE }
+         */
+        const guestDatabase = {
+            "kris pogoy": { table: "VIP 1", map: SEAT_MAP_IMAGE },
+            "jayson timbal": { table: "VIP 2", map: SEAT_MAP_IMAGE },
+            "trisha mae babila": { table: "VIP 1", map: SEAT_MAP_IMAGE },
+            "rain sempio": { table: "VIP 2", map: SEAT_MAP_IMAGE },
+            "zyne justine s. lomocso": { table: "Table 1", map: SEAT_MAP_IMAGE },
+            "mark keyboard": { table: "Table 2", map: SEAT_MAP_IMAGE },
+            "rafa rubio": { table: "Table 3", map: SEAT_MAP_IMAGE },
+            "mariane ruth d. sadogio": { table: "Table 4", map: SEAT_MAP_IMAGE },
+            "albert gabut": { table: "Table 5", map: SEAT_MAP_IMAGE },
+            "brazil regidor": { table: "Table 6", map: SEAT_MAP_IMAGE },
+            "cheska morente": { table: "Table 7", map: SEAT_MAP_IMAGE },
+            "ma. cecilia barde": { table: "Table 8", map: SEAT_MAP_IMAGE },
+            "jade remorosa": { table: "Table 9", map: SEAT_MAP_IMAGE },
+            "stephanie mae d. diamante": { table: "Table 10", map: SEAT_MAP_IMAGE },
+            "neil remorosa": { table: "Table 11", map: SEAT_MAP_IMAGE },
+            "richard jan gendoy": { table: "Table 1", map: SEAT_MAP_IMAGE },
+            "gilbillyjim c. molina": { table: "Table 2", map: SEAT_MAP_IMAGE },
+            "michael ruven l. durban": { table: "Table 3", map: SEAT_MAP_IMAGE },
+            "karen dupa-bagolor": { table: "Table 4", map: SEAT_MAP_IMAGE },
+            "ryan jay bagolor": { table: "Table 5", map: SEAT_MAP_IMAGE },
+            "lorenz glenn braza": { table: "Table 6", map: SEAT_MAP_IMAGE },
+            "mark zulieta": { table: "Table 7", map: SEAT_MAP_IMAGE },
+            "marry gene barba": { table: "Table 8", map: SEAT_MAP_IMAGE },
+            "cristy relatado": { table: "Table 9", map: SEAT_MAP_IMAGE },
+            "jeanyvi cahambing-basañez": { table: "Table 10", map: SEAT_MAP_IMAGE },
+            "marge dumag-orrica": { table: "Table 11", map: SEAT_MAP_IMAGE }
+        };
+
+        // Populate Datalist on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const datalist = document.getElementById("guest-list");
+            Object.keys(guestDatabase).forEach(guestKey => {
+                const option = document.createElement("option");
+                option.value = capitalizeWords(guestKey);
+                datalist.appendChild(option);
+            });
+        });
+
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, char => char.toUpperCase());
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            const input = document.getElementById("guest-input").value;
+            const cleanedInput = input.toLowerCase().trim();
+            const errorElement = document.getElementById("error-message");
+
+            if (guestDatabase[cleanedInput]) {
+                const guestData = guestDatabase[cleanedInput];
+                showResult(capitalizeWords(cleanedInput), guestData.table, guestData.map);
+                errorElement.style.display = "none";
+            } else {
+                errorElement.style.display = "block";
+            }
+        }
+
+        function showResult(name, table, mapUrl) {
+            document.getElementById("search-view").style.display = "none";
+            document.getElementById("result-view").style.display = "block";
+            
+            document.getElementById("display-name").innerText = name;
+            document.getElementById("display-table").innerText = table;
+            document.getElementById("display-map").src = mapUrl;
+        }
+
+        function showFullMap() {
+            showResult("Venue Seating", "Seat Plan", SEAT_MAP_IMAGE);
+        }
+
+        function resetSearch() {
+            document.getElementById("guest-input").value = "";
+            document.getElementById("error-message").style.display = "none";
+            document.getElementById("result-view").style.display = "none";
+            document.getElementById("search-view").style.display = "block";
+        }
+    </script>
+</body>
+</html>
